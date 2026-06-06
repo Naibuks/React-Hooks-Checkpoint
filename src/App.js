@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Container, Button } from 'react-bootstrap';
 import MovieList from './MovieList';
 import Filter from './Filter';
 import AddMovie from './AddMovie';
+import MovieDetail from './MovieDetail';
 import initialMovies from './movies';
 import './App.css';
 
@@ -35,36 +37,46 @@ function App() {
   };
 
   return (
-    <div className="app-container">
-      <Container className="py-5">
-        <header className="app-header text-center mb-5">
-          <h1 className="display-4 fw-bold mb-2">🎬 Movie App</h1>
-          <p className="lead text-muted">Discover, add, and filter your favorite movies and TV shows</p>
-        </header>
+    <Router>
+      <Routes>
+        <Route 
+          path="/" 
+          element={
+            <div className="app-container">
+              <Container className="py-5">
+                <header className="app-header text-center mb-5">
+                  <h1 className="display-4 fw-bold mb-2">🎬 Movie App</h1>
+                  <p className="lead text-muted">Discover, add, and filter your favorite movies and TV shows</p>
+                </header>
 
-        <AddMovie onAdd={handleAddMovie} />
+                <AddMovie onAdd={handleAddMovie} />
 
-        <Filter 
-          titleFilter={titleFilter}
-          ratingFilter={ratingFilter}
-          onTitleChange={setTitleFilter}
-          onRatingChange={setRatingFilter}
+                <Filter 
+                  titleFilter={titleFilter}
+                  ratingFilter={ratingFilter}
+                  onTitleChange={setTitleFilter}
+                  onRatingChange={setRatingFilter}
+                />
+
+                {(titleFilter || ratingFilter) && (
+                  <div className="mb-3 d-flex justify-content-between align-items-center">
+                    <small className="text-muted">
+                      Showing {filteredMovies.length} of {movies.length} movies
+                    </small>
+                    <Button variant="outline-secondary" size="sm" onClick={handleClearFilters}>
+                      Clear Filters
+                    </Button>
+                  </div>
+                )}
+
+                <MovieList movies={filteredMovies} onDelete={handleDeleteMovie} />
+              </Container>
+            </div>
+          }
         />
-
-        {(titleFilter || ratingFilter) && (
-          <div className="mb-3 d-flex justify-content-between align-items-center">
-            <small className="text-muted">
-              Showing {filteredMovies.length} of {movies.length} movies
-            </small>
-            <Button variant="outline-secondary" size="sm" onClick={handleClearFilters}>
-              Clear Filters
-            </Button>
-          </div>
-        )}
-
-        <MovieList movies={filteredMovies} onDelete={handleDeleteMovie} />
-      </Container>
-    </div>
+        <Route path="/movie/:id" element={<MovieDetail />} />
+      </Routes>
+    </Router>
   );
 }
 

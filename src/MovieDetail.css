@@ -1,0 +1,37 @@
+.movie-detail-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.movie-detail-container .ratio {
+  background-color: #000;
+}
+
+.movie-detail-container h3,
+.movie-detail-container h4 {
+  color: white;
+}
+
+.movie-detail-container p {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.8;
+}
+
+.movie-detail-container .btn {
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.movie-detail-container .btn:hover {
+  transform: translateX(-5px);
+}
+
+.trailer-section,
+.description-section {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}

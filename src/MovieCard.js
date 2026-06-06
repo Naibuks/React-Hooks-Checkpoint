@@ -1,9 +1,20 @@
 import React from 'react';
 import { Card, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const MovieCard = ({ title, description, posterURL, rating, onDelete, id }) => {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/movie/${id}`);
+  };
+
   return (
-    <Card className="movie-card h-100 shadow-sm">
+    <Card 
+      className="movie-card h-100 shadow-sm" 
+      style={{ cursor: 'pointer' }}
+      onClick={handleCardClick}
+    >
       <Card.Img 
         variant="top" 
         src={posterURL} 
@@ -19,7 +30,10 @@ const MovieCard = ({ title, description, posterURL, rating, onDelete, id }) => {
         <Button 
           variant="outline-danger" 
           size="sm" 
-          onClick={() => onDelete(id)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete(id);
+          }}
           className="mt-auto"
         >
           Delete
